@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <n>unifi-dns-sync</n>
+  <Repository>ghcr.io/nofuturekid/unifi-dns-sync:latest</Repository>
+  <Registry>https://ghcr.io</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/nofuturekid/unifi-dns-sync/issues</Support>
+  <Project>https://github.com/nofuturekid/unifi-dns-sync</Project>
+  <Overview>Automatically creates, updates and deletes UniFi local DNS records when Docker containers start or stop on unRAID. Opt-in per container via Docker labels. Supports CNAME and A records.</Overview>
+  <Category>Network:DNS</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/nofuturekid/unifi-dns-sync/main/unifi_dns_sync.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/nofuturekid/unifi-dns-sync/main/icon.png</Icon>
+  <ExtraParams>--restart=unless-stopped</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+
+  <!-- Docker socket (read-only) — required to listen for container events -->
+  <Config Name="Docker Socket" Target="/var/run/docker.sock" Default="/var/run/docker.sock" Mode="ro" Description="Docker socket for listening to container events. Must be read-only." Type="Path" Display="always" Required="true" Mask="false">/var/run/docker.sock</Config>
+
+  <!-- UniFi Gateway -->
+  <Config Name="UniFi Host" Target="UNIFI_HOST" Default="https://192.168.1.1" Mode="" Description="URL of your UniFi Gateway." Type="Variable" Display="always" Required="true" Mask="false">https://192.168.1.1</Config>
+  <Config Name="UniFi API Key" Target="UNIFI_API_KEY" Default="" Mode="" Description="UniFi API Key. Create one in UniFi → Settings → Control Plane → Integrations." Type="Variable" Display="always" Required="true" Mask="true"></Config>
+  <Config Name="UniFi Site" Target="UNIFI_SITE" Default="default" Mode="" Description="UniFi site name. Usually 'default' for single-site setups." Type="Variable" Display="advanced" Required="true" Mask="false">default</Config>
+
+  <!-- Domain -->
+  <Config Name="Domain" Target="DOMAIN" Default="home.example.com" Mode="" Description="Your internal domain. Container names become subdomains (e.g. plex.home.example.com)." Type="Variable" Display="always" Required="true" Mask="false"></Config>
+
+  <!-- DNS defaults — overridable per container via labels -->
+  <Config Name="Default Record Type" Target="DNS_DEFAULT_TYPE" Default="CNAME" Mode="" Description="Default DNS record type when dns.unifi.type label is not set. CNAME or A." Type="Variable" Display="always" Required="true" Mask="false">CNAME</Config>
+  <Config Name="Default Target" Target="DNS_DEFAULT_TARGET" Default="" Mode="" Description="Default CNAME target when dns.unifi.target label is not set (e.g. npm.home.example.com). Required when using CNAME records." Type="Variable" Display="always" Required="false" Mask="false"></Config>
+
+  <!-- Logging -->
+  <Config Name="Log Level" Target="LOG_LEVEL" Default="INFO" Mode="" Description="Logging verbosity: DEBUG, INFO, WARNING, ERROR" Type="Variable" Display="advanced" Required="false" Mask="false">INFO</Config>
+
+</Container>
