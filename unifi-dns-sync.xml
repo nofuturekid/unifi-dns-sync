@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <n>unifi-dns-sync</n>
+  <Repository>ghcr.io/nofuturekid/unifi-dns-sync:latest</Repository>
+  <Registry>https://ghcr.io</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/nofuturekid/unifi-dns-sync/issues</Support>
+  <Project>https://github.com/nofuturekid/unifi-dns-sync</Project>
+  <Overview>Automatically creates and deletes UniFi local DNS CNAME records when Docker containers start or stop on unRAID. Containers with a dedicated macvlan IP get a CNAME pointing to your Nginx Proxy Manager host. Containers without a dedicated IP are silently ignored. On startup, all already-running containers are synced automatically.</Overview>
+  <Category>Network:DNS</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/nofuturekid/unifi-dns-sync/main/unifi-dns-sync.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/nofuturekid/unifi-dns-sync/main/icon.png</Icon>
+  <ExtraParams>--restart=unless-stopped</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="Docker Socket" Target="/var/run/docker.sock" Default="/var/run/docker.sock" Mode="ro" Description="Docker socket for listening to container events. Must be read-only." Type="Path" Display="always" Required="true" Mask="false">/var/run/docker.sock</Config>
+  <Config Name="UniFi Host" Target="UNIFI_HOST" Default="https://192.168.1.1" Mode="" Description="URL of your UniFi Gateway (e.g. https://192.168.11.1)" Type="Variable" Display="always" Required="true" Mask="false">https://192.168.11.1</Config>
+  <Config Name="UniFi API Key" Target="UNIFI_API_KEY" Default="" Mode="" Description="UniFi API Key. Create one in UniFi → Settings → Control Plane → Integrations." Type="Variable" Display="always" Required="true" Mask="true"></Config>
+  <Config Name="UniFi Site" Target="UNIFI_SITE" Default="default" Mode="" Description="UniFi site name. Usually 'default' for single-site setups." Type="Variable" Display="advanced" Required="true" Mask="false">default</Config>
+  <Config Name="Domain" Target="DOMAIN" Default="home.example.com" Mode="" Description="Your internal domain. Container names become subdomains (e.g. plex.kroll-home.de)." Type="Variable" Display="always" Required="true" Mask="false"></Config>
+  <Config Name="NPM CNAME Target" Target="NPM_CNAME_TARGET" Default="npm.home.example.com" Mode="" Description="FQDN that all CNAMEs point to. Should be your Nginx Proxy Manager A-record." Type="Variable" Display="always" Required="true" Mask="false"></Config>
+  <Config Name="Skip Networks" Target="SKIP_NETWORKS" Default="bridge,host,none" Mode="" Description="Comma-separated Docker network names to ignore (containers without dedicated IPs)." Type="Variable" Display="advanced" Required="false" Mask="false">bridge,host,none</Config>
+  <Config Name="Skip Containers" Target="SKIP_CONTAINERS" Default="" Mode="" Description="Comma-separated container names to never create DNS entries for." Type="Variable" Display="advanced" Required="false" Mask="false"></Config>
+  <Config Name="Log Level" Target="LOG_LEVEL" Default="INFO" Mode="" Description="Logging verbosity: DEBUG, INFO, WARNING, ERROR" Type="Variable" Display="advanced" Required="false" Mask="false">INFO</Config>
+</Container>
